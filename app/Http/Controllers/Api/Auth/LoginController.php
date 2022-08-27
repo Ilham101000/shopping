@@ -30,9 +30,9 @@ class LoginController extends Controller
             $token = $user->createToken('myAppToken')->plainTextToken;
 
             return response()->json([
-                'massage' => 'success',
-                'user' => $user,
-                'token' => $token
+                'email' => Auth::user()->email,
+                'token' => $token,
+                'username' => Auth::user()->username,
             ], 200);
         }
 

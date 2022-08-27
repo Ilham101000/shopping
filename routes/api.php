@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\api\auth\logoutController;
+use App\Http\Controllers\shoppingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index']);
+    Route::post('shopping', [shoppingController::class, 'index']);
+    Route::get('shopping', [shoppingController::class, 'all']);
+    Route::get('shopping/{id}', [shoppingController::class, 'show']);
+    Route::put('shopping/{id}', [shoppingController::class, 'update']);
+    Route::delete('shopping/{id}', [shoppingController::class, 'delete']);
     Route::get('auth/logout', [logoutController::class, 'logout']);
 });
 
-Route::post('auth/register', RegisterController::class);
-Route::post('auth/login', LoginController::class);
+Route::post('users/signup', [RegisterController::class, '__invoke']);
+Route::get('users', [RegisterController::class, 'all']);
+Route::post('users/signin', LoginController::class);

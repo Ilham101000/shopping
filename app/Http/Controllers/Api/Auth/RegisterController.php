@@ -18,9 +18,15 @@ class RegisterController extends Controller
     public function __invoke(Request $request)
     {
         $validateData = $request->validate([
+            'username' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'country' => 'required',
             'name' => 'required',
-            'email' => 'required|email:dns',
-            'password' => 'required'
+            'postcode' => 'required',
         ]);
 
         $validateData['password'] = bcrypt($validateData['password']);
@@ -31,6 +37,14 @@ class RegisterController extends Controller
 
         return (new UserResource($user))->additional([
             'token' => $token->plainTextToken,
+        ]);
+    }
+
+    public function all() {
+        $user = User::all();
+
+        return response()->json([
+            $user
         ]);
     }
 }
